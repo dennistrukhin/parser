@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cmath>
 
 enum TokenizerState {S_READY, S_IDENTIFIER, S_STRING, S_NUMBER_INT, S_NUMBER_FLOAT};
 enum Token {T_IDENTIFIER, T_KEYWORD, T_STRING, T_INTEGER, T_FLOAT,
@@ -22,6 +23,14 @@ void add_token_control(Token type) {
     std::cout << "Control: <" << type << ">" << std::endl;
 }
 
+void add_token_int(int n) {
+    std::cout << "Integer: " << n << std::endl;
+}
+
+void add_token_float(float n) {
+    std::cout << "Float: " << n << std::endl;
+}
+
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
@@ -31,6 +40,9 @@ int main() {
     TokenizerState state = S_READY;
     char sequence[255];
     int sequencePosition = 0;
+    int n = 0;
+    float f = 0.0;
+    int f_digits = 0;
 
     if (is.eof()) {
         return 1;
@@ -67,12 +79,11 @@ int main() {
                 is.get(c);
                 continue;
             }
-            if (state == S_IDENTIFIER) {
-                sequence[sequencePosition++] = c;
-                if (is.eof()) break;
-                is.get(c);
-                continue;
-            }
+            // otherwise it's identifier
+            sequence[sequencePosition++] = c;
+            if (is.eof()) break;
+            is.get(c);
+            continue;
         }
         if (c >= '0' && c <= '9') {
             if (state == S_IDENTIFIER) {
@@ -81,10 +92,38 @@ int main() {
                 is.get(c);
                 continue;
             }
+            if (state == S_READY || state == S_NUMBER_INT) {
+                state = S_NUMBER_INT;
+                n = n * 10 + c - '0';
+                if (is.eof()) break;
+                is.get(c);
+                continue;
+            }
+            if (state == S_NUMBER_FLOAT) {
+                f = f + (c - '0') * pow(10, --f_digits);
+                if (is.eof()) break;
+                is.get(c);
+                continue;
+            }
+        }
+        if (c == '.') {
+            if (state == S_NUMBER_INT) {
+                state = S_NUMBER_FLOAT;
+                if (is.eof()) break;
+                is.get(c);
+                continue;
+            }
+            throw std::runtime_error("Unexpected dot symbol. Terminating.");
         }
         // Не буковка и не чиселко
         if (state == S_IDENTIFIER) {
             add_token_identifier(sequence);
+        }
+        if (state == S_NUMBER_INT) {
+            add_token_int(n);
+        }
+        if (state == S_NUMBER_FLOAT) {
+            add_token_float(n + f);
         }
 
         if (c == '{') {
@@ -116,6 +155,9 @@ int main() {
         for (int i = 0; i <= 255; i++) {
             sequence[i] = 0;
         }
+        n = 0;
+        f = 0.0;
+        f_digits = 0;
         state = S_READY;
     }
 

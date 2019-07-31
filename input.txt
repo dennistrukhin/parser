@@ -2,6 +2,7 @@ program{
 	int a, b = 10;
 	int c;
 	float fl_var = 5.42;
+	5.56.32;
 
 	c = a + b * 2;
 	int d=a*b;
