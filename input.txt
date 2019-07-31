@@ -1,0 +1,39 @@
+program{
+	int a, b = 10;
+	int c;
+	float fl_var = 5.42;
+
+	c = a + b * 2;
+	int d=a*b;
+	int x = (a + b) * 2 + c / 3 - 6.2;
+	float e = a * fl_var;
+
+
+	print "Integers";
+	print c;
+	print d;
+	print "Float result is: ", e;
+	print x;
+
+	string s1 = "some string";
+	string s2 = "Another string";
+
+	string s3 = s1 + s2 + " hehe :)";
+
+	print s3;
+
+	for (int i = 0; i < 10; i = i + 1) {
+        d = d + 1;
+        for (int j = 1; j < 4; j = j + 2) {
+            c = d + j;
+        }
+	}
+
+	if (d > 10) {
+        for (int k = 10; k > 7; k = k - 1) {
+            print "yes";
+        }
+	} else {
+	    print "no";
+	}
+}
