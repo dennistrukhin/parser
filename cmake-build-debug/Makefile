@@ -123,6 +123,33 @@ parser/fast:
 	$(MAKE) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/build
 .PHONY : parser/fast
 
+Tokenizer.o: Tokenizer.cpp.o
+
+.PHONY : Tokenizer.o
+
+# target to build an object file
+Tokenizer.cpp.o:
+	$(MAKE) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/Tokenizer.cpp.o
+.PHONY : Tokenizer.cpp.o
+
+Tokenizer.i: Tokenizer.cpp.i
+
+.PHONY : Tokenizer.i
+
+# target to preprocess a source file
+Tokenizer.cpp.i:
+	$(MAKE) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/Tokenizer.cpp.i
+.PHONY : Tokenizer.cpp.i
+
+Tokenizer.s: Tokenizer.cpp.s
+
+.PHONY : Tokenizer.s
+
+# target to generate assembly for a file
+Tokenizer.cpp.s:
+	$(MAKE) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/Tokenizer.cpp.s
+.PHONY : Tokenizer.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... parser"
+	@echo "... Tokenizer.o"
+	@echo "... Tokenizer.i"
+	@echo "... Tokenizer.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/dtrukhin/Projects/parser/Tokenizer.cpp">
+			<Option target="parser"/>
+		</Unit>
+		<Unit filename="/Users/dtrukhin/Projects/parser/Tokenizer.h">
+			<Option target="parser"/>
+		</Unit>
 		<Unit filename="/Users/dtrukhin/Projects/parser/main.cpp">
 			<Option target="parser"/>
 		</Unit>

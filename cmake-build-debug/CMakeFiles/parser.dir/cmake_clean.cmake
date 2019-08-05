@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/parser.dir/main.cpp.o"
+  "CMakeFiles/parser.dir/Tokenizer.cpp.o"
   "parser.pdb"
   "parser"
 )

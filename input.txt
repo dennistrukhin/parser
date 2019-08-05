@@ -2,7 +2,6 @@ program{
 	int a, b = 10;
 	int c;
 	float fl_var = 5.42;
-	5.56.32;
 
 	c = a + b * 2;
 	int d=a*b;
@@ -30,7 +29,7 @@ program{
         }
 	}
 
-	if (d > 10) {
+	if (d == 10) {
         for (int k = 10; k > 7; k = k - 1) {
             print "yes";
         }
