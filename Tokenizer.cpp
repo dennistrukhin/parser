@@ -24,24 +24,33 @@ bool Tokenizer::get_char() {
     return true;
 }
 
-void Tokenizer::add_token_keyword(Keyword k, const std::string& s) {
-    std::cout << "Keyword: " << k << ", " << s << std::endl;
-}
-
 void Tokenizer::add_token_operator(TokenEnumerator t, const std::string& s) {
     std::cout << "Operator: " << t << ", " << s << std::endl;
 }
 
 void Tokenizer::add_token_identifier(char s[255]) {
     if (strcmp(s, "int") == 0) {
-        add_token_keyword(T_INT, s);
+        add_token_keyword(T_KW_INTEGER);
+        return;
+    }
+    if (strcmp(s, "float") == 0) {
+        add_token_keyword(T_KW_FLOAT);
+        return;
+    }
+    if (strcmp(s, "print") == 0) {
+        add_token_keyword(T_KW_PRINT);
+        return;
+    }
+    if (strcmp(s, "program") == 0) {
+        add_token_keyword(T_KW_PROGRAM);
         return;
     }
     std::cout << "Identifier: " << s << std::endl;
 }
 
-void Tokenizer::add_token_keyword(Keyword k) {
-    std::cout << "Keyword: " << k << std::endl;
+void Tokenizer::add_token_keyword(TokenEnumerator keyword) {
+    std::tuple<TokenEnumerator, void *> t (keyword, nullptr);
+    tokens.push_back(t);
 }
 
 void Tokenizer::add_token_string(char s[255]) {
@@ -57,7 +66,6 @@ void Tokenizer::add_token_control(TokenEnumerator type) {
 }
 
 void Tokenizer::add_token_int(int number) {
-    std::cout << "Integer: " << number << std::endl;
     auto p = (int *)malloc(sizeof(int));
     *p = number;
     std::tuple<TokenEnumerator, void *> t (T_INTEGER, (void *)p);
@@ -65,7 +73,6 @@ void Tokenizer::add_token_int(int number) {
 }
 
 void Tokenizer::add_token_float(double number) {
-    std::cout << "Float: " << number << std::endl;
     auto * p = (float *)malloc(sizeof(float));
     *p = number;
     std::tuple<TokenEnumerator, void *> t (T_FLOAT, (void *)p);

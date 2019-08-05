@@ -18,11 +18,19 @@ int main() {
         switch (t) {
             case T_INTEGER:
                 p_int = (int *)std::get<1>(token);
-                std::cout << std::get<0>(token) << ' ' << *p_int << std::endl;
+                std::cout << "Integer: " << *p_int << std::endl;
                 break;
             case T_FLOAT:
                 p_float = (float *)std::get<1>(token);
-                std::cout << std::get<0>(token) << ' ' << *p_float << std::endl;
+                std::cout << "Float: " << *p_float << std::endl;
+                break;
+
+
+            case T_KW_INTEGER:
+                std::cout << "Keyword: int" << std::endl;
+                break;
+            case T_KW_FLOAT:
+                std::cout << "Keyword: float" << std::endl;
                 break;
         }
     }
