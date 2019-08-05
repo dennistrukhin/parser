@@ -6,7 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/Users/dtrukhin/Projects/parser/Tokenizer.cpp
+/Users/dennis/Projects/parser/Tokenizer.h
+string
+-
+list
+-
+map
+-
+vector
+-
+
+/Users/dennis/Projects/parser/main.cpp
 iostream
 -
 fstream
@@ -14,9 +24,5 @@ fstream
 cmath
 -
 Tokenizer.h
-/Users/dtrukhin/Projects/parser/Tokenizer.h
-
-/Users/dtrukhin/Projects/parser/Tokenizer.h
-string
--
+/Users/dennis/Projects/parser/Tokenizer.h
 

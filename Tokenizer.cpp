@@ -5,10 +5,14 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <tuple>
 #include "Tokenizer.h"
 
 Tokenizer::Tokenizer(char const * file_name) {
-    input_stream.open("/Users/dtrukhin/Projects/parser/input.txt");
+    input_stream.open(file_name);
+    if (!input_stream.good()) {
+        throw std::runtime_error("Bad input file. Terminating.");
+    }
 }
 
 bool Tokenizer::get_char() {
@@ -24,7 +28,7 @@ void Tokenizer::add_token_keyword(Keyword k, const std::string& s) {
     std::cout << "Keyword: " << k << ", " << s << std::endl;
 }
 
-void Tokenizer::add_token_operator(Token t, const std::string& s) {
+void Tokenizer::add_token_operator(TokenEnumerator t, const std::string& s) {
     std::cout << "Operator: " << t << ", " << s << std::endl;
 }
 
@@ -44,20 +48,28 @@ void Tokenizer::add_token_string(char s[255]) {
     std::cout << "String: " << s << std::endl;
 }
 
-void Tokenizer::add_token_control(Token type, const std::string& s) {
+void Tokenizer::add_token_control(TokenEnumerator type, const std::string& s) {
     std::cout << "Control: <" << type << " " << s << ">" << std::endl;
 }
 
-void Tokenizer::add_token_control(Token type) {
+void Tokenizer::add_token_control(TokenEnumerator type) {
     std::cout << "Control: <" << type << ">" << std::endl;
 }
 
 void Tokenizer::add_token_int(int number) {
     std::cout << "Integer: " << number << std::endl;
+    auto p = (int *)malloc(sizeof(int));
+    *p = number;
+    std::tuple<TokenEnumerator, void *> t (T_INTEGER, (void *)p);
+    tokens.push_back(t);
 }
 
 void Tokenizer::add_token_float(double number) {
     std::cout << "Float: " << number << std::endl;
+    auto * p = (float *)malloc(sizeof(float));
+    *p = number;
+    std::tuple<TokenEnumerator, void *> t (T_FLOAT, (void *)p);
+    tokens.push_back(t);
 }
 
 void Tokenizer::clear_buffers() {
@@ -71,6 +83,7 @@ void Tokenizer::clear_buffers() {
 }
 
 void Tokenizer::parse() {
+    clear_buffers();
     if (!get_char()) return;
 
     while (true) {
