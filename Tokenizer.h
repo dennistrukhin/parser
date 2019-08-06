@@ -15,7 +15,8 @@ enum TokenEnumerator {
     T_IDENTIFIER, T_STRING, T_INTEGER, T_FLOAT,
     T_CURLY_OPEN, T_CURLY_CLOSE,
     T_COMMA, T_EQUALITY, T_ASSIGNMENT,
-    T_KW_PROGRAM, T_KW_INTEGER, T_KW_FLOAT, T_KW_PRINT
+    T_KW_PROGRAM, T_KW_INTEGER, T_KW_FLOAT, T_KW_STRING, T_KW_PRINT,
+    T_KW_ELSE,
 };
 
 class Tokenizer {
@@ -40,15 +41,13 @@ private:
     double f = 0.0;
     int f_digits = 0;
 
-    void add_token_keyword(TokenEnumerator t, const std::string &s);
-
     void add_token_operator(TokenEnumerator t, const std::string &s);
 
     void add_token_identifier(char s[255]);
 
     void add_token_keyword(TokenEnumerator t);
 
-    void add_token_string(char s[255]);
+    void add_token_string(char const s[255]);
 
     void add_token_control(TokenEnumerator type, const std::string &s);
 

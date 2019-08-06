@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/dennis/Projects/parser/Tokenizer.cpp" "/Users/dennis/Projects/parser/cmake-build-debug/CMakeFiles/parser.dir/Tokenizer.cpp.o"
-  "/Users/dennis/Projects/parser/main.cpp" "/Users/dennis/Projects/parser/cmake-build-debug/CMakeFiles/parser.dir/main.cpp.o"
+  "/Users/dtrukhin/Projects/parser/Tokenizer.cpp" "/Users/dtrukhin/Projects/parser/cmake-build-debug/CMakeFiles/parser.dir/Tokenizer.cpp.o"
+  "/Users/dtrukhin/Projects/parser/main.cpp" "/Users/dtrukhin/Projects/parser/cmake-build-debug/CMakeFiles/parser.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
