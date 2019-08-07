@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <cmath>
 #include "Tokenizer.h"
 
 int main() {
@@ -33,6 +32,54 @@ int main() {
                 p_float = (float *)std::get<1>(token);
                 std::cout << "Float: " << *p_float << std::endl;
                 break;
+            case T_ASSIGNMENT:
+                std::cout << "Operator: =" << std::endl;
+                break;
+            case T_EQUALITY:
+                std::cout << "Operator: ==" << std::endl;
+                break;
+            case T_TERMINATOR:
+                std::cout << "Syntax: ;" << std::endl;
+                break;
+            case T_COMMA:
+                std::cout << "Syntax: ," << std::endl;
+                break;
+            case T_CURLY_OPEN:
+                std::cout << "Syntax: {" << std::endl;
+                break;
+            case T_CURLY_CLOSE:
+                std::cout << "Syntax: }" << std::endl;
+                break;
+            case T_PAREN_LEFT:
+                std::cout << "Syntax: (" << std::endl;
+                break;
+            case T_PAREN_RIGHT:
+                std::cout << "Syntax: )" << std::endl;
+                break;
+            case T_ADD:
+                std::cout << "Operator: +" << std::endl;
+                break;
+            case T_SUBTRACT:
+                std::cout << "Operator: -" << std::endl;
+                break;
+            case T_MULTIPLY:
+                std::cout << "Operator: *" << std::endl;
+                break;
+            case T_DIVIDE:
+                std::cout << "Operator: /" << std::endl;
+                break;
+            case T_GT:
+                std::cout << "Operator: >" << std::endl;
+                break;
+            case T_GTE:
+                std::cout << "Operator: >=" << std::endl;
+                break;
+            case T_LT:
+                std::cout << "Operator: <" << std::endl;
+                break;
+            case T_LTE:
+                std::cout << "Operator: <=" << std::endl;
+                break;
 
 
             case T_KW_INTEGER:
@@ -47,8 +94,17 @@ int main() {
             case T_KW_PROGRAM:
                 std::cout << "Keyword: program" << std::endl;
                 break;
+            case T_KW_FOR:
+                std::cout << "Keyword: for" << std::endl;
+                break;
+            case T_KW_IF:
+                std::cout << "Keyword: if" << std::endl;
+                break;
             case T_KW_ELSE:
                 std::cout << "Keyword: else" << std::endl;
+                break;
+            case T_KW_PRINT:
+                std::cout << "Keyword: print" << std::endl;
                 break;
         }
     }

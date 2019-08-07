@@ -24,10 +24,6 @@ bool Tokenizer::get_char() {
     return true;
 }
 
-void Tokenizer::add_token_operator(TokenEnumerator t, const std::string& s) {
-    std::cout << "Operator: " << t << ", " << s << std::endl;
-}
-
 void Tokenizer::add_token_identifier(char s[255]) {
     if (strcmp(s, "int") == 0) {
         add_token_keyword(T_KW_INTEGER);
@@ -43,6 +39,14 @@ void Tokenizer::add_token_identifier(char s[255]) {
     }
     if (strcmp(s, "print") == 0) {
         add_token_keyword(T_KW_PRINT);
+        return;
+    }
+    if (strcmp(s, "for") == 0) {
+        add_token_keyword(T_KW_FOR);
+        return;
+    }
+    if (strcmp(s, "if") == 0) {
+        add_token_keyword(T_KW_IF);
         return;
     }
     if (strcmp(s, "else") == 0) {
@@ -70,14 +74,6 @@ void Tokenizer::add_token_string(char const s[255]) {
     strcpy(p, s);
     std::tuple<TokenEnumerator, void *> t (T_STRING, (void *)p);
     tokens.push_back(t);
-}
-
-void Tokenizer::add_token_control(TokenEnumerator type, const std::string& s) {
-    std::cout << "Control: <" << type << " " << s << ">" << std::endl;
-}
-
-void Tokenizer::add_token_control(TokenEnumerator type) {
-    std::cout << "Control: <" << type << ">" << std::endl;
 }
 
 void Tokenizer::add_token_int(int number) {
@@ -176,31 +172,106 @@ void Tokenizer::parse() {
             add_token_float(n + f);
         }
 
-        if (c == '{') {
-            add_token_control(T_CURLY_OPEN, "{");
+        if (c == ';') {
+            add_token_keyword(T_TERMINATOR);
             if (!get_char()) break;
+            clear_buffers();
+            state = S_READY;
+            continue;
+        }
+        if (c == '{') {
+            add_token_keyword(T_CURLY_OPEN);
+            if (!get_char()) break;
+            clear_buffers();
             state = S_READY;
             continue;
         }
         if (c == '}') {
-            add_token_control(T_CURLY_CLOSE, "}");
+            add_token_keyword(T_CURLY_CLOSE);
             if (!get_char()) break;
+            clear_buffers();
+            state = S_READY;
+            continue;
+        }
+        if (c == '(') {
+            add_token_keyword(T_PAREN_LEFT);
+            if (!get_char()) break;
+            clear_buffers();
+            state = S_READY;
+            continue;
+        }
+        if (c == ')') {
+            add_token_keyword(T_PAREN_RIGHT);
+            if (!get_char()) break;
+            clear_buffers();
             state = S_READY;
             continue;
         }
         if (c == ',') {
-            add_token_control(T_COMMA, ",");
+            add_token_keyword(T_COMMA);
             if (!get_char()) break;
+            clear_buffers();
+            state = S_READY;
+            continue;
+        }
+        if (c == '+') {
+            add_token_keyword(T_ADD);
+            if (!get_char()) break;
+            clear_buffers();
+            state = S_READY;
+            continue;
+        }
+        if (c == '-') {
+            add_token_keyword(T_SUBTRACT);
+            if (!get_char()) break;
+            clear_buffers();
+            state = S_READY;
+            continue;
+        }
+        if (c == '*') {
+            add_token_keyword(T_MULTIPLY);
+            if (!get_char()) break;
+            clear_buffers();
+            state = S_READY;
+            continue;
+        }
+        if (c == '/') {
+            add_token_keyword(T_DIVIDE);
+            if (!get_char()) break;
+            clear_buffers();
             state = S_READY;
             continue;
         }
         if (c == '=') {
             if (!get_char()) break;
             if (c == '=') {
-                add_token_operator(T_EQUALITY, "==");
+                add_token_keyword(T_EQUALITY);
                 if (!get_char()) break;
+                continue;
             }
-            add_token_control(T_ASSIGNMENT, "=");
+            add_token_keyword(T_ASSIGNMENT);
+            clear_buffers();
+            continue;
+        }
+        if (c == '>') {
+            if (!get_char()) break;
+            if (c == '=') {
+                add_token_keyword(T_GTE);
+                if (!get_char()) break;
+                continue;
+            }
+            add_token_keyword(T_GT);
+            clear_buffers();
+            continue;
+        }
+        if (c == '<') {
+            if (!get_char()) break;
+            if (c == '=') {
+                add_token_keyword(T_LTE);
+                if (!get_char()) break;
+                continue;
+            }
+            add_token_keyword(T_LT);
             clear_buffers();
             continue;
         }

@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+/Users/dtrukhin/Projects/parser/Tokenizer.cpp
+iostream
+-
+fstream
+-
+cmath
+-
+tuple
+-
+Tokenizer.h
+/Users/dtrukhin/Projects/parser/Tokenizer.h
+
 /Users/dtrukhin/Projects/parser/Tokenizer.h
 string
 -
@@ -20,8 +32,6 @@ vector
 iostream
 -
 fstream
--
-cmath
 -
 Tokenizer.h
 /Users/dtrukhin/Projects/parser/Tokenizer.h
