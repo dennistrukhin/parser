@@ -1,4 +1,5 @@
 program {
+    print 2 + 4 * 2;
 	int a, b = 10;
 	int c;
 	float fl_var = 5.42;
@@ -14,6 +15,8 @@ program {
 	print d;
 	print "Float result is: ", e;
 	print x;
+
+	print "Here are", " several ", "strings";
 
 	string s1 = "some string";
 	string s2 = "Another string";
