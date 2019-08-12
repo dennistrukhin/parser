@@ -3,8 +3,13 @@
 
 CMakeFiles/parser.dir/Parser.cpp.o: ../Parser.cpp
 CMakeFiles/parser.dir/Parser.cpp.o: ../Parser.h
+CMakeFiles/parser.dir/Parser.cpp.o: ../RValue.h
 CMakeFiles/parser.dir/Parser.cpp.o: ../TokenAccessor.h
 CMakeFiles/parser.dir/Parser.cpp.o: ../TokenEnumerator.h
+
+CMakeFiles/parser.dir/RValue.cpp.o: ../RValue.cpp
+CMakeFiles/parser.dir/RValue.cpp.o: ../RValue.h
+CMakeFiles/parser.dir/RValue.cpp.o: ../TokenEnumerator.h
 
 CMakeFiles/parser.dir/TokenAccessor.cpp.o: ../TokenAccessor.cpp
 CMakeFiles/parser.dir/TokenAccessor.cpp.o: ../TokenAccessor.h
@@ -15,6 +20,7 @@ CMakeFiles/parser.dir/Tokenizer.cpp.o: ../Tokenizer.cpp
 CMakeFiles/parser.dir/Tokenizer.cpp.o: ../Tokenizer.h
 
 CMakeFiles/parser.dir/main.cpp.o: ../Parser.h
+CMakeFiles/parser.dir/main.cpp.o: ../RValue.h
 CMakeFiles/parser.dir/main.cpp.o: ../TokenAccessor.h
 CMakeFiles/parser.dir/main.cpp.o: ../TokenEnumerator.h
 CMakeFiles/parser.dir/main.cpp.o: ../Tokenizer.h

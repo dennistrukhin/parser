@@ -6,47 +6,29 @@
 
 #IncludeRegexTransform: 
 
-/Users/dennis/Projects/parser/Parser.cpp
+/Users/dtrukhin/Projects/parser/Parser.cpp
 iostream
 -
 Parser.h
-/Users/dennis/Projects/parser/Parser.h
+/Users/dtrukhin/Projects/parser/Parser.h
 TokenAccessor.h
-/Users/dennis/Projects/parser/TokenAccessor.h
+/Users/dtrukhin/Projects/parser/TokenAccessor.h
 
-/Users/dennis/Projects/parser/Parser.h
+/Users/dtrukhin/Projects/parser/Parser.h
 TokenAccessor.h
-/Users/dennis/Projects/parser/TokenAccessor.h
+/Users/dtrukhin/Projects/parser/TokenAccessor.h
+RValue.h
+/Users/dtrukhin/Projects/parser/RValue.h
 
-/Users/dennis/Projects/parser/TokenAccessor.h
+/Users/dtrukhin/Projects/parser/RValue.h
+TokenEnumerator.h
+/Users/dtrukhin/Projects/parser/TokenEnumerator.h
+
+/Users/dtrukhin/Projects/parser/TokenAccessor.h
 vector
 -
 TokenEnumerator.h
-/Users/dennis/Projects/parser/TokenEnumerator.h
+/Users/dtrukhin/Projects/parser/TokenEnumerator.h
 
-/Users/dennis/Projects/parser/TokenEnumerator.h
-
-/Users/dennis/Projects/parser/Tokenizer.h
-string
--
-list
--
-map
--
-vector
--
-TokenEnumerator.h
-/Users/dennis/Projects/parser/TokenEnumerator.h
-
-/Users/dennis/Projects/parser/main.cpp
-iostream
--
-fstream
--
-Tokenizer.h
-/Users/dennis/Projects/parser/Tokenizer.h
-TokenAccessor.h
-/Users/dennis/Projects/parser/TokenAccessor.h
-Parser.h
-/Users/dennis/Projects/parser/Parser.h
+/Users/dtrukhin/Projects/parser/TokenEnumerator.h
 

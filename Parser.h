@@ -7,6 +7,7 @@
 
 
 #include "TokenAccessor.h"
+#include "RValue.h"
 
 class Parser {
 public:
@@ -15,12 +16,15 @@ public:
     void process_print();
     void process_statement();
     void process_statement_block();
+    RValue * process_r_value();
+    RValue * process_concatenation();
+    RValue * process_equality();
     void parse();
 
 private:
     TokenAccessor * accessor;
-    TokenEnumerator r_value_type;
-    void * r_value;
+//    TokenEnumerator r_value_type;
+//    void * r_value;
 };
 
 

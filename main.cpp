@@ -8,7 +8,7 @@
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
-    char const * file_name = "/Users/dennis/Projects/parser/input.txt";
+    char const * file_name = "/Users/dtrukhin/Projects/parser/input.txt";
     auto * tokenizer = new Tokenizer(file_name);
     tokenizer->parse();
 

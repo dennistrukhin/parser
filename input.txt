@@ -1,19 +1,21 @@
 program {
-    print 2 + 4 * 2;
+    print 5;
+    print 2 == 1, " ", 2 == 2, " Trololo," + " qqq " + " 222" + "XDFDFE#$#R" + " fsf d", 345;
+    print 2 != 1;
+    print 2 != 2;
+    print 3;
+    print "Here are", " several " + "strings";
 	int a, b = 10;
 	int c;
-	float fl_var = 5.42;
 
 	c = a + b * 2;
 	int d=a*b;
-	int x = (a + b) * 2 + c / 3 - 6.2;
-	float e = a * fl_var;
+	int x = (a + b) * 2 + c * 3 - 6;
 
 
 	print "Integers";
 	print c;
 	print d;
-	print "Float result is: ", e;
 	print x;
 
 	print "Here are", " several ", "strings";

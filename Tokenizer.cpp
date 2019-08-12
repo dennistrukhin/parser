@@ -264,6 +264,16 @@ void Tokenizer::parse() {
             clear_buffers();
             continue;
         }
+        if (c == '!') {
+            if (!get_char()) break;
+            if (c == '=') {
+                add_token_keyword(T_INEQUALITY);
+                if (!get_char()) break;
+                clear_buffers();
+                continue;
+            }
+            throw std::runtime_error("Unexpected symbol, expected '=' after '!'. Terminating.");
+        }
         if (c == '<') {
             if (!get_char()) break;
             if (c == '=') {
