@@ -6,11 +6,8 @@
 #include "Parser.h"
 #include "TokenAccessor.h"
 
-RValue *Parser::process_equality() {
-    auto left_operand = new RValue();
-    left_operand->type = T_INTEGER;
-    left_operand->value = (int *) std::get<1>(accessor->get());
-    accessor->step();
+RValue *Parser::process_comparison() {
+    auto left_operand = process_sum();
 
     auto t = std::get<0>(accessor->get());
     if (t != T_EQUALITY && t != T_INEQUALITY && t != T_LT && t != T_LTE && t != T_GT && t != T_GTE) {
@@ -18,10 +15,7 @@ RValue *Parser::process_equality() {
     }
     accessor->step();
 
-    auto right_operand = new RValue();
-    right_operand->type = T_INTEGER;
-    right_operand->value = (int *) std::get<1>(accessor->get());
-    accessor->step();
+    auto right_operand = process_sum();
 
     auto result = new RValue();
     result->type = T_INTEGER;
@@ -35,11 +29,90 @@ RValue *Parser::process_equality() {
             *v = (int) (*((int *) left_operand->value) != *(int *)right_operand->value);
             result->value = (void *) v;
             break;
+        case T_LT:
+            *v = (int) (*((int *) left_operand->value) < *(int *)right_operand->value);
+            result->value = (void *) v;
+            break;
+        case T_LTE:
+            *v = (int) (*((int *) left_operand->value) <= *(int *)right_operand->value);
+            result->value = (void *) v;
+            break;
+        case T_GT:
+            *v = (int) (*((int *) left_operand->value) > *(int *)right_operand->value);
+            result->value = (void *) v;
+            break;
+        case T_GTE:
+            *v = (int) (*((int *) left_operand->value) >= *(int *)right_operand->value);
+            result->value = (void *) v;
+            break;
         default:
             throw std::runtime_error("Unknown comparison operator");
     }
 
     return  result;
+}
+
+RValue *Parser::process_factor() {
+    int * buff = (int *)malloc(sizeof(int));
+    auto result = new RValue();
+    result->type = T_INTEGER;
+    result->value = (int *) std::get<1>(accessor->get());
+
+    while (true) {
+        accessor->step();
+
+        auto t = std::get<0>(accessor->get());
+        if (t != T_MULTIPLY && t != T_DIVIDE) {
+            return result;
+        }
+
+        accessor->step();
+        auto right_operand = new RValue();
+        right_operand->type = T_INTEGER;
+        right_operand->value = (int *) std::get<1>(accessor->get());
+        switch (t) {
+            case T_MULTIPLY:
+                *buff = *(int *)result->value * *(int *)right_operand->value;
+                result->value = (void *)buff;
+                break;
+            default:
+                throw std::runtime_error("Unknown multiplication operator");
+        }
+    }
+}
+
+RValue *Parser::process_sum() {
+    int * buff = (int *)malloc(sizeof(int));
+//    auto result = new RValue();
+//    result->type = T_INTEGER;
+//    result->value = (int *) std::get<1>(accessor->get());
+    auto result = process_factor();
+
+    while (true) {
+
+        auto t = std::get<0>(accessor->get());
+        if (t != T_ADD && t != T_SUBTRACT) {
+            return result;
+        }
+
+        accessor->step();
+        auto right_operand = process_factor();
+//        auto right_operand = new RValue();
+//        right_operand->type = T_INTEGER;
+//        right_operand->value = (int *) std::get<1>(accessor->get());
+        switch (t) {
+            case T_ADD:
+                *buff = *(int *)result->value + *(int *)right_operand->value;
+                result->value = (void *)buff;
+                break;
+            case T_SUBTRACT:
+                *buff = *(int *)result->value - *(int *)right_operand->value;
+                result->value = (void *)buff;
+                break;
+            default:
+                throw std::runtime_error("Unknown summation operator");
+        }
+    }
 }
 
 RValue *Parser::process_concatenation() {
@@ -81,7 +154,7 @@ RValue *Parser::process_r_value() {
     if (t == T_STRING) {
         return process_concatenation();
     }
-    return process_equality();
+    return process_comparison();
 }
 
 void Parser::process_print() {

@@ -18,13 +18,16 @@ public:
     void process_statement_block();
     RValue * process_r_value();
     RValue * process_concatenation();
-    RValue * process_equality();
+    RValue * process_comparison();
     void parse();
 
 private:
     TokenAccessor * accessor;
 //    TokenEnumerator r_value_type;
 //    void * r_value;
+    RValue *process_sum();
+
+    RValue *process_factor();
 };
 
 
