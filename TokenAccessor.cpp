@@ -10,7 +10,6 @@ TokenAccessor::TokenAccessor(const std::vector<std::tuple<TokenEnumerator, void 
 }
 
 std::tuple<TokenEnumerator, void *> TokenAccessor::get() {
-    std::cout << "<TOKEN: " << std::get<0>(tokens.at(p)) << " at position " << p << ">" << std::endl;
     return tokens.at(p);
 }
 

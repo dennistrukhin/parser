@@ -62,34 +62,27 @@ RValue *Parser::process_factor() {
     } else {
         result = new RValue();
         result->type = T_INTEGER;
-        result->value = (int *) std::get<1>(accessor->get(1000));
+        result->value = (int *) std::get<1>(accessor->get());
     }
 
     while (true) {
         accessor->step();
 
-        t = std::get<0>(accessor->get(1001));
-        if (t == T_PAREN_RIGHT) {
-            std::cout << ")";
-//            accessor->step();
-        }
+        t = std::get<0>(accessor->get());
         if (t != T_MULTIPLY && t != T_DIVIDE) {
             return result;
         }
 
         accessor->step();
-        auto t1 = std::get<0>(accessor->get(1002));
+        auto t1 = std::get<0>(accessor->get());
         RValue * right_operand;
-        std::cout << t << std::endl;
         if (t1 == T_PAREN_LEFT) {
-            std::cout << "(";
             accessor->step();
             right_operand = process_comparison();
         } else {
-            std::cout << "NUMBER";
             right_operand = new RValue();
             right_operand->type = T_INTEGER;
-            right_operand->value = (int *) std::get<1>(accessor->get(1003));
+            right_operand->value = (int *) std::get<1>(accessor->get());
         }
         switch (t) {
             case T_MULTIPLY:
@@ -97,7 +90,6 @@ RValue *Parser::process_factor() {
                 result->value = (void *)buff;
                 break;
             default:
-                std::cout << t << std::endl;
                 throw std::runtime_error("Unknown multiplication operator");
         }
     }
@@ -105,9 +97,6 @@ RValue *Parser::process_factor() {
 
 RValue *Parser::process_sum() {
     int * buff = (int *)malloc(sizeof(int));
-//    auto result = new RValue();
-//    result->type = T_INTEGER;
-//    result->value = (int *) std::get<1>(accessor->get());
     auto result = process_factor();
 
     while (true) {
@@ -120,10 +109,6 @@ RValue *Parser::process_sum() {
         accessor->step();
         auto right_operand = process_factor();
         auto t1 = std::get<0>(accessor->get());
-//        auto right_operand = new RValue();
-//        right_operand->type = T_INTEGER;
-//        right_operand->value = (int *) std::get<1>(accessor->get());
-        std::cout << "SUM: " << t1 << std::endl;
         switch (t) {
             case T_ADD:
                 *buff = *(int *)result->value + *(int *)right_operand->value;
@@ -183,8 +168,8 @@ RValue *Parser::process_r_value() {
 
 void Parser::process_print() {
     while (true) {
-        auto t = std::get<0>(accessor->get(2000));
-        if (t != T_STRING && t != T_INTEGER && t != T_FLOAT && t != T_IDENTIFIER) {
+        auto t = std::get<0>(accessor->get());
+        if (t != T_STRING && t != T_INTEGER && t != T_FLOAT && t != T_IDENTIFIER && t != T_PAREN_LEFT) {
             throw std::runtime_error("Expected STRING or IDENTIFIER or EXPRESSION");
         }
         auto r_value = process_r_value();
@@ -200,12 +185,12 @@ void Parser::process_print() {
                 throw std::runtime_error("Unknown R_VALUE type");
         }
 
-        if (std::get<0>(accessor->get(2001)) == T_COMMA) {
+        if (std::get<0>(accessor->get()) == T_COMMA) {
             accessor->step();
             continue;
         }
 
-        if (std::get<0>(accessor->get(2002)) == T_TERMINATOR) {
+        if (std::get<0>(accessor->get()) == T_TERMINATOR) {
             std::cout << std::endl;
             return;
         }
