@@ -123,6 +123,33 @@ parser/fast:
 	$(MAKE) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/build
 .PHONY : parser/fast
 
+KeywordMapper.o: KeywordMapper.cpp.o
+
+.PHONY : KeywordMapper.o
+
+# target to build an object file
+KeywordMapper.cpp.o:
+	$(MAKE) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/KeywordMapper.cpp.o
+.PHONY : KeywordMapper.cpp.o
+
+KeywordMapper.i: KeywordMapper.cpp.i
+
+.PHONY : KeywordMapper.i
+
+# target to preprocess a source file
+KeywordMapper.cpp.i:
+	$(MAKE) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/KeywordMapper.cpp.i
+.PHONY : KeywordMapper.cpp.i
+
+KeywordMapper.s: KeywordMapper.cpp.s
+
+.PHONY : KeywordMapper.s
+
+# target to generate assembly for a file
+KeywordMapper.cpp.s:
+	$(MAKE) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/KeywordMapper.cpp.s
+.PHONY : KeywordMapper.cpp.s
+
 Parser.o: Parser.cpp.o
 
 .PHONY : Parser.o
@@ -267,6 +294,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... parser"
+	@echo "... KeywordMapper.o"
+	@echo "... KeywordMapper.i"
+	@echo "... KeywordMapper.s"
 	@echo "... Parser.o"
 	@echo "... Parser.i"
 	@echo "... Parser.s"

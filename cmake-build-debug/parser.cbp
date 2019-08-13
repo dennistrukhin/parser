@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/dtrukhin/Projects/parser/KeywordMapper.cpp">
+			<Option target="parser"/>
+		</Unit>
+		<Unit filename="/Users/dtrukhin/Projects/parser/KeywordMapper.h">
+			<Option target="parser"/>
+		</Unit>
 		<Unit filename="/Users/dtrukhin/Projects/parser/Parser.cpp">
 			<Option target="parser"/>
 		</Unit>

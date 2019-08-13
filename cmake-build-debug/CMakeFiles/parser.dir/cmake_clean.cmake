@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/parser.dir/TokenAccessor.cpp.o"
   "CMakeFiles/parser.dir/Parser.cpp.o"
   "CMakeFiles/parser.dir/RValue.cpp.o"
+  "CMakeFiles/parser.dir/KeywordMapper.cpp.o"
   "parser.pdb"
   "parser"
 )

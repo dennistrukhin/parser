@@ -11,6 +11,7 @@
 #include <map>
 #include <vector>
 #include "TokenEnumerator.h"
+#include "KeywordMapper.h"
 
 
 class Tokenizer {
@@ -21,12 +22,13 @@ class Tokenizer {
 public:
     std::vector<std::tuple<TokenEnumerator, void *>> tokens;
 
-    explicit Tokenizer(char const *file_name);
+    Tokenizer(char const *file_name, KeywordMapper * kw);
 
     void parse();
 
 private:
     std::ifstream input_stream;
+    KeywordMapper * keyword_mapper;
     char c = 0;
     TokenizerState state = S_READY;
     char sequence[255]{};

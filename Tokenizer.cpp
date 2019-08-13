@@ -7,8 +7,10 @@
 #include <cmath>
 #include <tuple>
 #include "Tokenizer.h"
+#include "KeywordMapper.h"
 
-Tokenizer::Tokenizer(char const * file_name) {
+Tokenizer::Tokenizer(char const * file_name, KeywordMapper * km) {
+    keyword_mapper = km;
     input_stream.open(file_name);
     if (!input_stream.good()) {
         throw std::runtime_error("Bad input file. Terminating.");
@@ -25,36 +27,8 @@ bool Tokenizer::get_char() {
 }
 
 void Tokenizer::add_token_identifier(char s[255]) {
-    if (strcmp(s, "int") == 0) {
-        add_token_keyword(T_KW_INTEGER);
-        return;
-    }
-    if (strcmp(s, "float") == 0) {
-        add_token_keyword(T_KW_FLOAT);
-        return;
-    }
-    if (strcmp(s, "string") == 0) {
-        add_token_keyword(T_KW_STRING);
-        return;
-    }
-    if (strcmp(s, "print") == 0) {
-        add_token_keyword(T_KW_PRINT);
-        return;
-    }
-    if (strcmp(s, "for") == 0) {
-        add_token_keyword(T_KW_FOR);
-        return;
-    }
-    if (strcmp(s, "if") == 0) {
-        add_token_keyword(T_KW_IF);
-        return;
-    }
-    if (strcmp(s, "else") == 0) {
-        add_token_keyword(T_KW_ELSE);
-        return;
-    }
-    if (strcmp(s, "program") == 0) {
-        add_token_keyword(T_KW_PROGRAM);
+    if (TokenEnumerator t1 = keyword_mapper->get_token_by_keyword(s)) {
+        add_token_keyword(t1);
         return;
     }
 

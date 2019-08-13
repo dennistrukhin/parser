@@ -9,7 +9,7 @@ int main() {
     std::cout << "Hello, World!" << std::endl;
 
     char const * file_name = "/Users/dtrukhin/Projects/parser/input.txt";
-    auto * tokenizer = new Tokenizer(file_name);
+    auto * tokenizer = new Tokenizer(file_name, new KeywordMapper());
     tokenizer->parse();
 
     auto accessor = new TokenAccessor(tokenizer->tokens);
