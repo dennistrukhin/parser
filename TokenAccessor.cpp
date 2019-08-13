@@ -2,6 +2,7 @@
 // Created by Dennis Trukhin on 2019-08-09.
 //
 
+#include <iostream>
 #include "TokenAccessor.h"
 
 TokenAccessor::TokenAccessor(const std::vector<std::tuple<TokenEnumerator, void *>> &t) {
@@ -9,6 +10,12 @@ TokenAccessor::TokenAccessor(const std::vector<std::tuple<TokenEnumerator, void 
 }
 
 std::tuple<TokenEnumerator, void *> TokenAccessor::get() {
+    std::cout << "<TOKEN: " << std::get<0>(tokens.at(p)) << " at position " << p << ">" << std::endl;
+    return tokens.at(p);
+}
+
+std::tuple<TokenEnumerator, void *> TokenAccessor::get(int marker) {
+    std::cout << "<(" << marker << ") TOKEN: " << std::get<0>(tokens.at(p)) << " at position " << p << ">" << std::endl;
     return tokens.at(p);
 }
 

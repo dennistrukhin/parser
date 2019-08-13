@@ -1,5 +1,6 @@
 program {
-    print 2 * 2 + 3;
+    print 2 * 2 * (2 - 1);
+    print 2 * 2 + 3 == 8;
     print 2 == 1, " ", 2 == 2, " Trololo," + " qqq " + " 222" + "XDFDFE#$#R" + " fsf d", 345;
     print 2 != 1;
     print 2 != 2;
