@@ -204,6 +204,33 @@ RValue.cpp.s:
 	$(MAKE) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/RValue.cpp.s
 .PHONY : RValue.cpp.s
 
+StringComparator.o: StringComparator.cpp.o
+
+.PHONY : StringComparator.o
+
+# target to build an object file
+StringComparator.cpp.o:
+	$(MAKE) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/StringComparator.cpp.o
+.PHONY : StringComparator.cpp.o
+
+StringComparator.i: StringComparator.cpp.i
+
+.PHONY : StringComparator.i
+
+# target to preprocess a source file
+StringComparator.cpp.i:
+	$(MAKE) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/StringComparator.cpp.i
+.PHONY : StringComparator.cpp.i
+
+StringComparator.s: StringComparator.cpp.s
+
+.PHONY : StringComparator.s
+
+# target to generate assembly for a file
+StringComparator.cpp.s:
+	$(MAKE) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/StringComparator.cpp.s
+.PHONY : StringComparator.cpp.s
+
 TokenAccessor.o: TokenAccessor.cpp.o
 
 .PHONY : TokenAccessor.o
@@ -303,6 +330,9 @@ help:
 	@echo "... RValue.o"
 	@echo "... RValue.i"
 	@echo "... RValue.s"
+	@echo "... StringComparator.o"
+	@echo "... StringComparator.i"
+	@echo "... StringComparator.s"
 	@echo "... TokenAccessor.o"
 	@echo "... TokenAccessor.i"
 	@echo "... TokenAccessor.s"

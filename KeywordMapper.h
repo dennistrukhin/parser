@@ -8,31 +8,25 @@
 
 #include <map>
 #include "TokenEnumerator.h"
-
-struct cmp_str
-{
-    bool operator()(char const *a, char const *b) const
-    {
-        return std::strcmp(a, b) < 0;
-    }
-};
+#include "StringComparator.h"
 
 class KeywordMapper {
 public:
     TokenEnumerator get_token_by_keyword(char const *);
-    const char * CP_FOR = "for";
-    const char * CP_PRINT = "print";
-    const char * CP_INTEGER = "int";
-    const char * CP_FLOAT = "float";
-    const char * CP_STRING = "string";
-    const char * CP_IF = "if";
-    const char * CP_ELSE = "else";
-    const char * CP_PROGRAM = "program";
+
+    const char *CP_FOR = "for";
+    const char *CP_PRINT = "print";
+    const char *CP_INTEGER = "int";
+    const char *CP_FLOAT = "float";
+    const char *CP_STRING = "string";
+    const char *CP_IF = "if";
+    const char *CP_ELSE = "else";
+    const char *CP_PROGRAM = "program";
 
     KeywordMapper();
-private:
 
-    std::map<const char *, TokenEnumerator, cmp_str> keyword_mapper;
+private:
+    std::map<const char *, TokenEnumerator, StringComparator> keyword_mapper;
 };
 
 

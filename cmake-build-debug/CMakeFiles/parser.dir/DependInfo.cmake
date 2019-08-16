@@ -7,6 +7,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/dtrukhin/Projects/parser/KeywordMapper.cpp" "/Users/dtrukhin/Projects/parser/cmake-build-debug/CMakeFiles/parser.dir/KeywordMapper.cpp.o"
   "/Users/dtrukhin/Projects/parser/Parser.cpp" "/Users/dtrukhin/Projects/parser/cmake-build-debug/CMakeFiles/parser.dir/Parser.cpp.o"
   "/Users/dtrukhin/Projects/parser/RValue.cpp" "/Users/dtrukhin/Projects/parser/cmake-build-debug/CMakeFiles/parser.dir/RValue.cpp.o"
+  "/Users/dtrukhin/Projects/parser/StringComparator.cpp" "/Users/dtrukhin/Projects/parser/cmake-build-debug/CMakeFiles/parser.dir/StringComparator.cpp.o"
   "/Users/dtrukhin/Projects/parser/TokenAccessor.cpp" "/Users/dtrukhin/Projects/parser/cmake-build-debug/CMakeFiles/parser.dir/TokenAccessor.cpp.o"
   "/Users/dtrukhin/Projects/parser/Tokenizer.cpp" "/Users/dtrukhin/Projects/parser/cmake-build-debug/CMakeFiles/parser.dir/Tokenizer.cpp.o"
   "/Users/dtrukhin/Projects/parser/main.cpp" "/Users/dtrukhin/Projects/parser/cmake-build-debug/CMakeFiles/parser.dir/main.cpp.o"

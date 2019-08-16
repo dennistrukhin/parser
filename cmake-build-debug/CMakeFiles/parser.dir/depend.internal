@@ -4,23 +4,29 @@
 CMakeFiles/parser.dir/KeywordMapper.cpp.o
  /Users/dtrukhin/Projects/parser/KeywordMapper.cpp
  /Users/dtrukhin/Projects/parser/KeywordMapper.h
+ /Users/dtrukhin/Projects/parser/StringComparator.h
  /Users/dtrukhin/Projects/parser/TokenEnumerator.h
 CMakeFiles/parser.dir/Parser.cpp.o
  /Users/dtrukhin/Projects/parser/Parser.cpp
  /Users/dtrukhin/Projects/parser/Parser.h
  /Users/dtrukhin/Projects/parser/RValue.h
+ /Users/dtrukhin/Projects/parser/StringComparator.h
  /Users/dtrukhin/Projects/parser/TokenAccessor.h
  /Users/dtrukhin/Projects/parser/TokenEnumerator.h
 CMakeFiles/parser.dir/RValue.cpp.o
  /Users/dtrukhin/Projects/parser/RValue.cpp
  /Users/dtrukhin/Projects/parser/RValue.h
  /Users/dtrukhin/Projects/parser/TokenEnumerator.h
+CMakeFiles/parser.dir/StringComparator.cpp.o
+ /Users/dtrukhin/Projects/parser/StringComparator.cpp
+ /Users/dtrukhin/Projects/parser/StringComparator.h
 CMakeFiles/parser.dir/TokenAccessor.cpp.o
  /Users/dtrukhin/Projects/parser/TokenAccessor.cpp
  /Users/dtrukhin/Projects/parser/TokenAccessor.h
  /Users/dtrukhin/Projects/parser/TokenEnumerator.h
 CMakeFiles/parser.dir/Tokenizer.cpp.o
  /Users/dtrukhin/Projects/parser/KeywordMapper.h
+ /Users/dtrukhin/Projects/parser/StringComparator.h
  /Users/dtrukhin/Projects/parser/TokenEnumerator.h
  /Users/dtrukhin/Projects/parser/Tokenizer.cpp
  /Users/dtrukhin/Projects/parser/Tokenizer.h
@@ -28,6 +34,7 @@ CMakeFiles/parser.dir/main.cpp.o
  /Users/dtrukhin/Projects/parser/KeywordMapper.h
  /Users/dtrukhin/Projects/parser/Parser.h
  /Users/dtrukhin/Projects/parser/RValue.h
+ /Users/dtrukhin/Projects/parser/StringComparator.h
  /Users/dtrukhin/Projects/parser/TokenAccessor.h
  /Users/dtrukhin/Projects/parser/TokenEnumerator.h
  /Users/dtrukhin/Projects/parser/Tokenizer.h

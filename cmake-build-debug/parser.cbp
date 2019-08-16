@@ -98,6 +98,12 @@
 		<Unit filename="/Users/dtrukhin/Projects/parser/RValue.h">
 			<Option target="parser"/>
 		</Unit>
+		<Unit filename="/Users/dtrukhin/Projects/parser/StringComparator.cpp">
+			<Option target="parser"/>
+		</Unit>
+		<Unit filename="/Users/dtrukhin/Projects/parser/StringComparator.h">
+			<Option target="parser"/>
+		</Unit>
 		<Unit filename="/Users/dtrukhin/Projects/parser/TokenAccessor.cpp">
 			<Option target="parser"/>
 		</Unit>

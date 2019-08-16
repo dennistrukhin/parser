@@ -6,28 +6,37 @@
 #define PARSER_PARSER_H
 
 
+#include <map>
 #include "TokenAccessor.h"
 #include "RValue.h"
+#include "StringComparator.h"
 
 class Parser {
 public:
-    explicit Parser(TokenAccessor * a);
+    explicit Parser(TokenAccessor *a);
 
-    void process_print();
-    void process_statement();
-    void process_statement_block();
-    RValue * process_r_value();
-    RValue * process_concatenation();
-    RValue * process_comparison();
     void parse();
 
 private:
-    TokenAccessor * accessor;
-//    TokenEnumerator r_value_type;
-//    void * r_value;
+    TokenAccessor *accessor;
+    std::map<char *, TokenEnumerator, StringComparator> keyword_mapper;
+
     RValue *process_sum();
 
     RValue *process_factor();
+
+    RValue *process_r_value();
+
+    RValue *process_concatenation();
+
+    RValue *process_comparison();
+
+    void process_int_declaration();
+    void process_print();
+
+    void process_statement();
+
+    void process_statement_block();
 };
 
 

@@ -22,40 +22,40 @@ RValue *Parser::process_comparison() {
     int *v = (int *) malloc(sizeof(int));
     switch (t) {
         case T_EQUALITY:
-            *v = (int) (*((int *) left_operand->value) == *(int *)right_operand->value);
+            *v = (int) (*((int *) left_operand->value) == *(int *) right_operand->value);
             result->value = (void *) v;
             break;
         case T_INEQUALITY:
-            *v = (int) (*((int *) left_operand->value) != *(int *)right_operand->value);
+            *v = (int) (*((int *) left_operand->value) != *(int *) right_operand->value);
             result->value = (void *) v;
             break;
         case T_LT:
-            *v = (int) (*((int *) left_operand->value) < *(int *)right_operand->value);
+            *v = (int) (*((int *) left_operand->value) < *(int *) right_operand->value);
             result->value = (void *) v;
             break;
         case T_LTE:
-            *v = (int) (*((int *) left_operand->value) <= *(int *)right_operand->value);
+            *v = (int) (*((int *) left_operand->value) <= *(int *) right_operand->value);
             result->value = (void *) v;
             break;
         case T_GT:
-            *v = (int) (*((int *) left_operand->value) > *(int *)right_operand->value);
+            *v = (int) (*((int *) left_operand->value) > *(int *) right_operand->value);
             result->value = (void *) v;
             break;
         case T_GTE:
-            *v = (int) (*((int *) left_operand->value) >= *(int *)right_operand->value);
+            *v = (int) (*((int *) left_operand->value) >= *(int *) right_operand->value);
             result->value = (void *) v;
             break;
         default:
             throw std::runtime_error("Unknown comparison operator");
     }
 
-    return  result;
+    return result;
 }
 
 RValue *Parser::process_factor() {
     auto t = std::get<0>(accessor->get());
     int *buff = (int *) malloc(sizeof(int));
-    RValue * result;
+    RValue *result;
     if (t == T_PAREN_LEFT) {
         accessor->step();
         result = process_comparison();
@@ -75,7 +75,7 @@ RValue *Parser::process_factor() {
 
         accessor->step();
         auto t1 = std::get<0>(accessor->get());
-        RValue * right_operand;
+        RValue *right_operand;
         if (t1 == T_PAREN_LEFT) {
             accessor->step();
             right_operand = process_comparison();
@@ -86,8 +86,8 @@ RValue *Parser::process_factor() {
         }
         switch (t) {
             case T_MULTIPLY:
-                *buff = *(int *)result->value * *(int *)right_operand->value;
-                result->value = (void *)buff;
+                *buff = *(int *) result->value * *(int *) right_operand->value;
+                result->value = (void *) buff;
                 break;
             default:
                 throw std::runtime_error("Unknown multiplication operator");
@@ -96,7 +96,7 @@ RValue *Parser::process_factor() {
 }
 
 RValue *Parser::process_sum() {
-    int * buff = (int *)malloc(sizeof(int));
+    int *buff = (int *) malloc(sizeof(int));
     auto result = process_factor();
 
     while (true) {
@@ -111,12 +111,12 @@ RValue *Parser::process_sum() {
         auto t1 = std::get<0>(accessor->get());
         switch (t) {
             case T_ADD:
-                *buff = *(int *)result->value + *(int *)right_operand->value;
-                result->value = (void *)buff;
+                *buff = *(int *) result->value + *(int *) right_operand->value;
+                result->value = (void *) buff;
                 break;
             case T_SUBTRACT:
-                *buff = *(int *)result->value - *(int *)right_operand->value;
-                result->value = (void *)buff;
+                *buff = *(int *) result->value - *(int *) right_operand->value;
+                result->value = (void *) buff;
                 break;
             default:
                 throw std::runtime_error("Unknown summation operator");
@@ -139,21 +139,21 @@ RValue *Parser::process_concatenation() {
 
     int left_operand_length = 0;
     int right_operand_length = 0;
-    while (((char *)left_operand->value)[left_operand_length] != '\0') {
+    while (((char *) left_operand->value)[left_operand_length] != '\0') {
         left_operand_length++;
     }
-    while (((char *)right_operand->value)[right_operand_length] != '\0') {
+    while (((char *) right_operand->value)[right_operand_length] != '\0') {
         right_operand_length++;
     }
 
-    char * s = (char *)malloc(sizeof(char) * (1 + left_operand_length + right_operand_length));
+    char *s = (char *) malloc(sizeof(char) * (1 + left_operand_length + right_operand_length));
     memcpy(s, left_operand->value, left_operand_length);
     memcpy(s + left_operand_length, right_operand->value, right_operand_length);
     s[left_operand_length + right_operand_length] = '\0';
 
     auto result = new RValue();
     result->type = T_STRING;
-    result->value = (void *)s;
+    result->value = (void *) s;
 
     return result;
 }
@@ -199,11 +199,46 @@ void Parser::process_print() {
     }
 }
 
+void Parser::process_int_declaration() {
+    char *name;
+    while (true) {
+        auto t = std::get<0>(accessor->get());
+        if (t != T_IDENTIFIER) {
+            throw std::runtime_error("Expected identifier name");
+        }
+        name = (char *) std::get<0>(accessor->get());
+        accessor->step();
+        t = std::get<0>(accessor->get());
+        if (t == T_ASSIGNMENT) {
+            std::cout << "Assignment" << std::endl;
+            accessor->step();
+            auto v = process_comparison();
+            t = std::get<0>(accessor->get());
+        }
+        if (t == T_COMMA) {
+            std::cout << "Comma" << std::endl;
+            accessor->step();
+            continue;
+        }
+        if (t == T_TERMINATOR) {
+            std::cout << ";" << std::endl;
+            accessor->step();
+            return;
+        }
+    }
+}
+
 void Parser::process_statement() {
     while (true) {
         if (std::get<0>(accessor->get()) == T_KW_PRINT) {
             accessor->step();
             process_print();
+            accessor->step();
+            return;
+        }
+        if (std::get<0>(accessor->get()) == T_KW_INTEGER) {
+            accessor->step();
+            process_int_declaration();
             accessor->step();
             return;
         }

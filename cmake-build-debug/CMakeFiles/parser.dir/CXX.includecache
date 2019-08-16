@@ -6,39 +6,35 @@
 
 #IncludeRegexTransform: 
 
-/Users/dtrukhin/Projects/parser/KeywordMapper.h
+/Users/dtrukhin/Projects/parser/Parser.cpp
+iostream
+-
+Parser.h
+/Users/dtrukhin/Projects/parser/Parser.h
+TokenAccessor.h
+/Users/dtrukhin/Projects/parser/TokenAccessor.h
+
+/Users/dtrukhin/Projects/parser/Parser.h
 map
 -
+TokenAccessor.h
+/Users/dtrukhin/Projects/parser/TokenAccessor.h
+RValue.h
+/Users/dtrukhin/Projects/parser/RValue.h
+StringComparator.h
+/Users/dtrukhin/Projects/parser/StringComparator.h
+
+/Users/dtrukhin/Projects/parser/RValue.h
 TokenEnumerator.h
 /Users/dtrukhin/Projects/parser/TokenEnumerator.h
 
-/Users/dtrukhin/Projects/parser/TokenEnumerator.h
+/Users/dtrukhin/Projects/parser/StringComparator.h
 
-/Users/dtrukhin/Projects/parser/Tokenizer.cpp
-iostream
--
-fstream
--
-cmath
--
-tuple
--
-Tokenizer.h
-/Users/dtrukhin/Projects/parser/Tokenizer.h
-KeywordMapper.h
-/Users/dtrukhin/Projects/parser/KeywordMapper.h
-
-/Users/dtrukhin/Projects/parser/Tokenizer.h
-string
--
-list
--
-map
--
+/Users/dtrukhin/Projects/parser/TokenAccessor.h
 vector
 -
 TokenEnumerator.h
 /Users/dtrukhin/Projects/parser/TokenEnumerator.h
-KeywordMapper.h
-/Users/dtrukhin/Projects/parser/KeywordMapper.h
+
+/Users/dtrukhin/Projects/parser/TokenEnumerator.h
 
