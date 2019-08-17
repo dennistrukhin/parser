@@ -3,4 +3,4 @@ project(parser)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(parser main.cpp Tokenizer.cpp Tokenizer.h TokenAccessor.cpp TokenAccessor.h TokenEnumerator.h Parser.cpp Parser.h RValue.cpp RValue.h KeywordMapper.cpp KeywordMapper.h StringComparator.cpp StringComparator.h)
+add_executable(parser main.cpp Tokenizer.cpp Tokenizer.h TokenAccessor.cpp TokenAccessor.h TokenEnumerator.h Parser.cpp Parser.h RValue.cpp RValue.h KeywordMapper.cpp KeywordMapper.h StringComparator.cpp StringComparator.h Identifier.cpp Identifier.h)

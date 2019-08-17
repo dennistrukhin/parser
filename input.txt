@@ -1,16 +1,18 @@
 program {
     print 2 * (2 * (1 + 2)) * (2 - 1);
+    print 2 * 2 + 3 == 7;
     print 2 * 2 + 3 == 8;
+    print 2 * 2 + 3 < 8;
     print 2 == 1, " ", 2 == 2, " Trololo," + " qqq " + " 222" + "XDFDFE#$#R" + " fsf d", 345;
     print 2 != 1;
     print 2 != 2;
     print 3;
     print "Here are", " several " + "strings";
-	int a, b = 10;
-	int c;
+	int a = 1, b = 10;
+	int c = a + b * 2;
+	int d = a + b * 2;
+	int e = a + b * 2;
 
-	c = a + b * 2;
-	int d=a*b;
 	int x = (a + b) * 2 + c * 3 - 6;
 
 
@@ -21,7 +23,7 @@ program {
 
 	print "Here are", " several ", "strings";
 
-	string s1 = "some string";
+	string s1 = "some string ";
 	string s2 = "Another string";
 
 	string s3 = s1 + s2 + " hehe :)";

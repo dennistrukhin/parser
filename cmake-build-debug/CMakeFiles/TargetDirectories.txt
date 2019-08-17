@@ -1,3 +1,3 @@
-/Users/dtrukhin/Projects/parser/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/dtrukhin/Projects/parser/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/dtrukhin/Projects/parser/cmake-build-debug/CMakeFiles/parser.dir
+/Users/dennis/Projects/parser/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/dennis/Projects/parser/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/dennis/Projects/parser/cmake-build-debug/CMakeFiles/parser.dir

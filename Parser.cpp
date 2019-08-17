@@ -59,6 +59,11 @@ RValue *Parser::process_factor() {
     if (t == T_PAREN_LEFT) {
         accessor->step();
         result = process_comparison();
+    } else if (t == T_IDENTIFIER) {
+        char const * name = (char *)std::get<1>(accessor->get());
+        result = new RValue();
+        result->type = T_INTEGER;
+        result->value = (int *) (identifiers.find(name)->second->value);
     } else {
         result = new RValue();
         result->type = T_INTEGER;
@@ -79,18 +84,22 @@ RValue *Parser::process_factor() {
         if (t1 == T_PAREN_LEFT) {
             accessor->step();
             right_operand = process_comparison();
+        } else if (t == T_IDENTIFIER) {
+            char const * name = (char *)std::get<1>(accessor->get());
+            std::cout << "identifier in expression: " << name << std::endl;
+            right_operand = new RValue();
+            right_operand->type = T_INTEGER;
+            right_operand->value = (int *) (identifiers.find(name)->second->value);
         } else {
             right_operand = new RValue();
             right_operand->type = T_INTEGER;
             right_operand->value = (int *) std::get<1>(accessor->get());
         }
-        switch (t) {
-            case T_MULTIPLY:
-                *buff = *(int *) result->value * *(int *) right_operand->value;
-                result->value = (void *) buff;
-                break;
-            default:
-                throw std::runtime_error("Unknown multiplication operator");
+        if (t == T_MULTIPLY) {
+            *buff = *(int *) result->value * *(int *) right_operand->value;
+            result->value = (void *) buff;
+        } else {
+            throw std::runtime_error("Unknown multiplication operator");
         }
     }
 }
@@ -125,12 +134,24 @@ RValue *Parser::process_sum() {
 }
 
 RValue *Parser::process_concatenation() {
-    auto left_operand = new RValue();
-    left_operand->type = T_STRING;
-    left_operand->value = (char *) std::get<1>(accessor->get());
-    accessor->step();
-
     auto t = std::get<0>(accessor->get());
+    RValue * left_operand;
+    if (t == T_STRING) {
+        left_operand = new RValue();
+        left_operand->type = T_STRING;
+        left_operand->value = (char *) std::get<1>(accessor->get());
+        accessor->step();
+    } else if (t == T_IDENTIFIER) {
+        auto name = (char *) std::get<1>(accessor->get());
+        left_operand = new RValue();
+        left_operand->type = T_STRING;
+        left_operand->value = (char *) (identifiers.find(name)->second->value);
+        accessor->step();
+    } else {
+        throw std::runtime_error("Expected STRING or IDENTIFIER");
+    }
+
+    t = std::get<0>(accessor->get());
     if (t != T_ADD) {
         return left_operand;
     }
@@ -162,6 +183,12 @@ RValue *Parser::process_r_value() {
     auto t = std::get<0>(accessor->get());
     if (t == T_STRING) {
         return process_concatenation();
+    } else if (t == T_IDENTIFIER) {
+        auto name = (char *) std::get<1>(accessor->get());
+        TokenEnumerator type = (identifiers.find(name)->second->type);
+        if (type == T_STRING) {
+            return process_concatenation();
+        }
     }
     return process_comparison();
 }
@@ -199,6 +226,35 @@ void Parser::process_print() {
     }
 }
 
+void Parser::process_string_declaration() {
+    char *name;
+    while (true) {
+        auto t = std::get<0>(accessor->get());
+        if (t != T_IDENTIFIER) {
+            throw std::runtime_error("Expected identifier name");
+        }
+        name = (char *) std::get<1>(accessor->get());
+        accessor->step();
+        t = std::get<0>(accessor->get());
+        if (t == T_ASSIGNMENT) {
+            accessor->step();
+            auto v = process_concatenation();
+            t = std::get<0>(accessor->get());
+            set_identifier(name, (char *)v->value);
+        } else if (t == T_COMMA) {
+            set_identifier(name, nullptr);
+        }
+        if (t == T_COMMA) {
+            accessor->step();
+            continue;
+        }
+        if (t == T_TERMINATOR) {
+            accessor->step();
+            return;
+        }
+    }
+}
+
 void Parser::process_int_declaration() {
     char *name;
     while (true) {
@@ -206,22 +262,22 @@ void Parser::process_int_declaration() {
         if (t != T_IDENTIFIER) {
             throw std::runtime_error("Expected identifier name");
         }
-        name = (char *) std::get<0>(accessor->get());
+        name = (char *) std::get<1>(accessor->get());
         accessor->step();
         t = std::get<0>(accessor->get());
         if (t == T_ASSIGNMENT) {
-            std::cout << "Assignment" << std::endl;
             accessor->step();
             auto v = process_comparison();
             t = std::get<0>(accessor->get());
+            set_identifier(name, *(int *)v->value);
+        } else if (t == T_COMMA) {
+            set_identifier(name, 0);
         }
         if (t == T_COMMA) {
-            std::cout << "Comma" << std::endl;
             accessor->step();
             continue;
         }
         if (t == T_TERMINATOR) {
-            std::cout << ";" << std::endl;
             accessor->step();
             return;
         }
@@ -239,7 +295,11 @@ void Parser::process_statement() {
         if (std::get<0>(accessor->get()) == T_KW_INTEGER) {
             accessor->step();
             process_int_declaration();
+            return;
+        }
+        if (std::get<0>(accessor->get()) == T_KW_STRING) {
             accessor->step();
+            process_string_declaration();
             return;
         }
         if (std::get<0>(accessor->get()) == T_TERMINATOR) {
@@ -271,4 +331,27 @@ void Parser::parse() {
         process_statement_block();
         std::cout << "Execution finished with code 0" << std::endl;
     }
+}
+
+void Parser::set_identifier(char const *name, int value) {
+    int * v = (int *) malloc(sizeof(int));
+    *v = value;
+
+    auto i = new Identifier(T_INTEGER, (void *)v);
+
+    identifiers.insert(std::pair<char const *, Identifier *>(name, i));
+}
+
+void Parser::set_identifier(char const *name, const char *value) {
+    int str_length = 0;
+    while (value[str_length]) {
+        str_length++;
+    }
+    char * v = (char *) malloc(sizeof(char) * (str_length + 1));
+    memcpy(v, value, str_length);
+    v[str_length] = '\0';
+
+    auto i = new Identifier(T_STRING, (void *)v);
+
+    identifiers.insert(std::pair<char const *, Identifier *>(name, i));
 }

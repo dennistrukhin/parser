@@ -6,35 +6,41 @@
 
 #IncludeRegexTransform: 
 
-/Users/dtrukhin/Projects/parser/Parser.cpp
+/Users/dennis/Projects/parser/Identifier.h
+TokenEnumerator.h
+/Users/dennis/Projects/parser/TokenEnumerator.h
+
+/Users/dennis/Projects/parser/Parser.cpp
 iostream
 -
 Parser.h
-/Users/dtrukhin/Projects/parser/Parser.h
+/Users/dennis/Projects/parser/Parser.h
 TokenAccessor.h
-/Users/dtrukhin/Projects/parser/TokenAccessor.h
+/Users/dennis/Projects/parser/TokenAccessor.h
 
-/Users/dtrukhin/Projects/parser/Parser.h
+/Users/dennis/Projects/parser/Parser.h
 map
 -
 TokenAccessor.h
-/Users/dtrukhin/Projects/parser/TokenAccessor.h
+/Users/dennis/Projects/parser/TokenAccessor.h
 RValue.h
-/Users/dtrukhin/Projects/parser/RValue.h
+/Users/dennis/Projects/parser/RValue.h
 StringComparator.h
-/Users/dtrukhin/Projects/parser/StringComparator.h
+/Users/dennis/Projects/parser/StringComparator.h
+Identifier.h
+/Users/dennis/Projects/parser/Identifier.h
 
-/Users/dtrukhin/Projects/parser/RValue.h
+/Users/dennis/Projects/parser/RValue.h
 TokenEnumerator.h
-/Users/dtrukhin/Projects/parser/TokenEnumerator.h
+/Users/dennis/Projects/parser/TokenEnumerator.h
 
-/Users/dtrukhin/Projects/parser/StringComparator.h
+/Users/dennis/Projects/parser/StringComparator.h
 
-/Users/dtrukhin/Projects/parser/TokenAccessor.h
+/Users/dennis/Projects/parser/TokenAccessor.h
 vector
 -
 TokenEnumerator.h
-/Users/dtrukhin/Projects/parser/TokenEnumerator.h
+/Users/dennis/Projects/parser/TokenEnumerator.h
 
-/Users/dtrukhin/Projects/parser/TokenEnumerator.h
+/Users/dennis/Projects/parser/TokenEnumerator.h
 

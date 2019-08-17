@@ -10,6 +10,7 @@
 #include "TokenAccessor.h"
 #include "RValue.h"
 #include "StringComparator.h"
+#include "Identifier.h"
 
 class Parser {
 public:
@@ -20,6 +21,7 @@ public:
 private:
     TokenAccessor *accessor;
     std::map<char *, TokenEnumerator, StringComparator> keyword_mapper;
+    std::map<char const *, Identifier *, StringComparator> identifiers;
 
     RValue *process_sum();
 
@@ -32,11 +34,15 @@ private:
     RValue *process_comparison();
 
     void process_int_declaration();
+    void process_string_declaration();
     void process_print();
 
     void process_statement();
 
     void process_statement_block();
+
+    void set_identifier(char const * name, int value);
+    void set_identifier(char const * name, const char * value);
 };
 
 
