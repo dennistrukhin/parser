@@ -33,16 +33,21 @@ private:
 
     RValue *process_comparison();
 
+    void process_for_block();
+
     void process_int_declaration();
+
     void process_string_declaration();
+
     void process_print();
 
     void process_statement();
 
     void process_statement_block();
 
-    void set_identifier(char const * name, int value);
-    void set_identifier(char const * name, const char * value);
+    void set_identifier(char const *name, int value);
+
+    void set_identifier(char const *name, const char *value);
 };
 
 

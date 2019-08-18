@@ -21,3 +21,11 @@ std::tuple<TokenEnumerator, void *> TokenAccessor::get(int marker) {
 void TokenAccessor::step() {
     ++p;
 }
+
+int TokenAccessor::get_position() {
+    return p;
+}
+
+void TokenAccessor::stepTo(int position) {
+    p = position;
+}

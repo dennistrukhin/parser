@@ -17,8 +17,14 @@ public:
     explicit TokenAccessor(const std::vector<std::tuple<TokenEnumerator, void *>> &tokens);
 
     std::tuple<TokenEnumerator, void *> get();
+
     std::tuple<TokenEnumerator, void *> get(int marker);
+
     void step();
+
+    int get_position();
+
+    void stepTo(int);
 };
 
 

@@ -1,4 +1,11 @@
 program {
+    string s4 = "some string ";
+	string s5 = "Another string";
+	string s6;
+	s6 = s4 + s5;
+	print s6;
+
+
     print 2 * (2 * (1 + 2)) * (2 - 1);
     print 2 * 2 + 3 == 7;
     print 2 * 2 + 3 == 8;
@@ -18,7 +25,7 @@ program {
 
 	print "Integers";
 	print c;
-	print d;
+	print "D: ", d;
 	print x;
 
 	print "Here are", " several ", "strings";
@@ -30,10 +37,17 @@ program {
 
 	print s3;
 
+	for (int j = 0; j < 3; j = j + 1) {
+	    print "j = ", j;
+	}
+
 	for (int i = 0; i < 10; i = i + 1) {
         d = d + 1;
+        print "d = ", d;
         for (int j = 1; j <= 4; j = j + 2) {
+            print "!#$%^";
             c = d + j;
+            print "c = ", c;
         }
 	}
 

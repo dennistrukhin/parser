@@ -255,6 +255,55 @@ void Parser::process_string_declaration() {
     }
 }
 
+void Parser::process_for_block() {
+    auto t = std::get<0>(accessor->get());
+    if (t != T_PAREN_LEFT) {
+        throw std::runtime_error("Expected (");
+    }
+    accessor->step();
+    process_statement();
+    int p_condition = accessor->get_position();
+    while (t != T_TERMINATOR) {
+        accessor->step();
+        t = std::get<0>(accessor->get());
+    }
+    accessor->step();
+    int p_after = accessor->get_position();
+
+    while (t != T_PAREN_RIGHT) {
+        accessor->step();
+        t = std::get<0>(accessor->get());
+    }
+    accessor->step();
+    int p_block = accessor->get_position();
+
+    accessor->step();
+    accessor->step();
+    int curly_balance = 1;
+    while (curly_balance > 0) {
+        accessor->step();
+        t = std::get<0>(accessor->get());
+        if (t == T_CURLY_OPEN) {
+            curly_balance++;
+        }
+        if (t == T_CURLY_CLOSE) {
+            curly_balance--;
+        }
+    }
+
+    accessor->step();
+    int out_of_block = accessor->get_position();
+
+    while (accessor->stepTo(p_condition), *(int *)process_comparison()->value > 0) {
+        accessor->stepTo(p_block);
+        process_statement_block();
+        accessor->stepTo(p_after);
+        process_statement();
+    }
+    accessor->stepTo(out_of_block);
+
+}
+
 void Parser::process_int_declaration() {
     char *name;
     while (true) {
@@ -302,6 +351,23 @@ void Parser::process_statement() {
             process_string_declaration();
             return;
         }
+        if (std::get<0>(accessor->get()) == T_IDENTIFIER) {
+            auto name = (char *)std::get<1>(accessor->get());
+            accessor->step();
+            if (std::get<0>(accessor->get()) != T_ASSIGNMENT) {
+                throw std::runtime_error("Expected = after identifier");
+            }
+            accessor->step();
+            auto value = process_comparison();
+            set_identifier(name, *(int *)value->value);
+            accessor->step();
+            return;
+        }
+        if (std::get<0>(accessor->get()) == T_KW_FOR) {
+            accessor->step();
+            process_for_block();
+            return;
+        }
         if (std::get<0>(accessor->get()) == T_TERMINATOR) {
             std::cout << "EXPRESSION PROCESSED" << std::endl;
             accessor->step();
@@ -312,9 +378,14 @@ void Parser::process_statement() {
 }
 
 void Parser::process_statement_block() {
+    if (std::get<0>(accessor->get()) != T_CURLY_OPEN) {
+        throw std::runtime_error("Expected {");
+    }
+    accessor->step();
     while (std::get<0>(accessor->get()) != T_CURLY_CLOSE) {
         process_statement();
     }
+    accessor->step();
 }
 
 Parser::Parser(TokenAccessor *a) {
@@ -324,10 +395,6 @@ Parser::Parser(TokenAccessor *a) {
 void Parser::parse() {
     if (std::get<0>(accessor->get()) == T_KW_PROGRAM) {
         accessor->step();
-        if (std::get<0>(accessor->get()) != T_CURLY_OPEN) {
-            throw std::runtime_error("Expected {");
-        }
-        accessor->step();
         process_statement_block();
         std::cout << "Execution finished with code 0" << std::endl;
     }
@@ -336,6 +403,12 @@ void Parser::parse() {
 void Parser::set_identifier(char const *name, int value) {
     int * v = (int *) malloc(sizeof(int));
     *v = value;
+
+    auto it = identifiers.find(name);
+    if (it != identifiers.end()) {
+        it->second->value = (void *)v;
+        return;
+    }
 
     auto i = new Identifier(T_INTEGER, (void *)v);
 
