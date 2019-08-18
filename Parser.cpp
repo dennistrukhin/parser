@@ -60,7 +60,7 @@ RValue *Parser::process_factor() {
         accessor->step();
         result = process_comparison();
     } else if (t == T_IDENTIFIER) {
-        char const * name = (char *)std::get<1>(accessor->get());
+        char const *name = (char *) std::get<1>(accessor->get());
         result = new RValue();
         result->type = T_INTEGER;
         result->value = (int *) (identifiers.find(name)->second->value);
@@ -85,7 +85,7 @@ RValue *Parser::process_factor() {
             accessor->step();
             right_operand = process_comparison();
         } else if (t == T_IDENTIFIER) {
-            char const * name = (char *)std::get<1>(accessor->get());
+            char const *name = (char *) std::get<1>(accessor->get());
             std::cout << "identifier in expression: " << name << std::endl;
             right_operand = new RValue();
             right_operand->type = T_INTEGER;
@@ -135,7 +135,7 @@ RValue *Parser::process_sum() {
 
 RValue *Parser::process_concatenation() {
     auto t = std::get<0>(accessor->get());
-    RValue * left_operand;
+    RValue *left_operand;
     if (t == T_STRING) {
         left_operand = new RValue();
         left_operand->type = T_STRING;
@@ -240,9 +240,11 @@ void Parser::process_string_declaration() {
             accessor->step();
             auto v = process_concatenation();
             t = std::get<0>(accessor->get());
-            set_identifier(name, (char *)v->value);
-        } else if (t == T_COMMA) {
-            set_identifier(name, nullptr);
+            set_identifier(name, (char *) v->value);
+        } else if (t == T_COMMA || t == T_TERMINATOR) {
+            auto s = (char *)malloc(sizeof(char));
+            s[0] = '\0';
+            set_identifier(name, s);
         }
         if (t == T_COMMA) {
             accessor->step();
@@ -294,7 +296,7 @@ void Parser::process_for_block() {
     accessor->step();
     int out_of_block = accessor->get_position();
 
-    while (accessor->stepTo(p_condition), *(int *)process_comparison()->value > 0) {
+    while (accessor->stepTo(p_condition), *(int *) process_comparison()->value > 0) {
         accessor->stepTo(p_block);
         process_statement_block();
         accessor->stepTo(p_after);
@@ -318,8 +320,8 @@ void Parser::process_int_declaration() {
             accessor->step();
             auto v = process_comparison();
             t = std::get<0>(accessor->get());
-            set_identifier(name, *(int *)v->value);
-        } else if (t == T_COMMA) {
+            set_identifier(name, *(int *) v->value);
+        } else if (t == T_COMMA || t == T_TERMINATOR) {
             set_identifier(name, 0);
         }
         if (t == T_COMMA) {
@@ -352,14 +354,19 @@ void Parser::process_statement() {
             return;
         }
         if (std::get<0>(accessor->get()) == T_IDENTIFIER) {
-            auto name = (char *)std::get<1>(accessor->get());
+            auto name = (char *) std::get<1>(accessor->get());
             accessor->step();
             if (std::get<0>(accessor->get()) != T_ASSIGNMENT) {
                 throw std::runtime_error("Expected = after identifier");
             }
             accessor->step();
-            auto value = process_comparison();
-            set_identifier(name, *(int *)value->value);
+            if (identifiers.find(name)->second->type == T_INTEGER) {
+                auto value = process_comparison();
+                set_identifier(name, *(int *) value->value);
+            } else {
+                auto value = process_concatenation();
+                set_identifier(name, (char *) value->value);
+            }
             accessor->step();
             return;
         }
@@ -401,16 +408,16 @@ void Parser::parse() {
 }
 
 void Parser::set_identifier(char const *name, int value) {
-    int * v = (int *) malloc(sizeof(int));
+    int *v = (int *) malloc(sizeof(int));
     *v = value;
 
     auto it = identifiers.find(name);
     if (it != identifiers.end()) {
-        it->second->value = (void *)v;
+        it->second->value = (void *) v;
         return;
     }
 
-    auto i = new Identifier(T_INTEGER, (void *)v);
+    auto i = new Identifier(T_INTEGER, (void *) v);
 
     identifiers.insert(std::pair<char const *, Identifier *>(name, i));
 }
@@ -420,11 +427,17 @@ void Parser::set_identifier(char const *name, const char *value) {
     while (value[str_length]) {
         str_length++;
     }
-    char * v = (char *) malloc(sizeof(char) * (str_length + 1));
+    char *v = (char *) malloc(sizeof(char) * (str_length + 1));
     memcpy(v, value, str_length);
     v[str_length] = '\0';
 
-    auto i = new Identifier(T_STRING, (void *)v);
+    auto it = identifiers.find(name);
+    if (it != identifiers.end()) {
+        it->second->value = (void *) v;
+        return;
+    }
+
+    auto i = new Identifier(T_STRING, (void *) v);
 
     identifiers.insert(std::pair<char const *, Identifier *>(name, i));
 }
