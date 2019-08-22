@@ -306,6 +306,59 @@ void Parser::process_for_block() {
 
 }
 
+void Parser::process_if_block() {
+    auto t = std::get<0>(accessor->get());
+    if (t != T_PAREN_LEFT) {
+        throw std::runtime_error("Expected (");
+    }
+    accessor->step();
+    auto v = process_comparison();
+    t = std::get<0>(accessor->get());
+    if (t != T_PAREN_RIGHT) {
+        throw std::runtime_error("Expected )");
+    }
+    accessor->step();
+
+    if (*(int *)v->value) {
+        process_statement_block();
+        t = std::get<0>(accessor->get());
+        if (t == T_KW_ELSE) {
+            accessor->step();
+            accessor->step();
+            int curly_balance = 1;
+            while (curly_balance > 0) {
+                accessor->step();
+                t = std::get<0>(accessor->get());
+                if (t == T_CURLY_OPEN) {
+                    curly_balance++;
+                }
+                if (t == T_CURLY_CLOSE) {
+                    curly_balance--;
+                }
+            }
+            accessor->step();
+        }
+    } else {
+        int curly_balance = 1;
+        while (curly_balance > 0) {
+            accessor->step();
+            t = std::get<0>(accessor->get());
+            if (t == T_CURLY_OPEN) {
+                curly_balance++;
+            }
+            if (t == T_CURLY_CLOSE) {
+                curly_balance--;
+            }
+        }
+        accessor->step();
+        t = std::get<0>(accessor->get());
+        if (t == T_KW_ELSE) {
+            accessor->step();
+            process_statement_block();
+        }
+    }
+}
+
 void Parser::process_int_declaration() {
     char *name;
     while (true) {
@@ -373,6 +426,11 @@ void Parser::process_statement() {
         if (std::get<0>(accessor->get()) == T_KW_FOR) {
             accessor->step();
             process_for_block();
+            return;
+        }
+        if (std::get<0>(accessor->get()) == T_KW_IF) {
+            accessor->step();
+            process_if_block();
             return;
         }
         if (std::get<0>(accessor->get()) == T_TERMINATOR) {

@@ -45,13 +45,20 @@ program {
         d = d + 1;
         print "d = ", d;
         for (int j = 1; j <= 4; j = j + 2) {
-            print "!#$%^";
             c = d + j;
             print "c = ", c;
         }
 	}
 
-	if (d == 10) {
+	if (1 < 2) {
+	    if (2 < 3) {
+	        print "dfdsfsd";
+	    }
+	} else {
+	    print "N";
+	}
+
+	if (d != 10) {
         for (int k = 10; k >= 7; k = k - 1) {
             print "yes";
         }

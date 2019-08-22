@@ -35,6 +35,8 @@ private:
 
     void process_for_block();
 
+    void process_if_block();
+
     void process_int_declaration();
 
     void process_string_declaration();
