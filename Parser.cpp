@@ -84,7 +84,7 @@ RValue *Parser::process_factor() {
         if (t1 == T_PAREN_LEFT) {
             accessor->step();
             right_operand = process_comparison();
-        } else if (t == T_IDENTIFIER) {
+        } else if (t1 == T_IDENTIFIER) {
             char const *name = (char *) std::get<1>(accessor->get());
             std::cout << "identifier in expression: " << name << std::endl;
             right_operand = new RValue();
